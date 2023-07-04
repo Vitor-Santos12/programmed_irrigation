@@ -1,9 +1,14 @@
-| Supported Targets | ESP32 |
-| ----------------- | ----- |
+| Irrigation | ESP32 |
+| ---------- | ----- |
+# scheduled irrigation
 
-# Example: using LwIP SNTP module and time functions
+This code has a schedueld irrigation as goal
 
-This example demonstrates the use of LwIP SNTP module to obtain time from Internet servers. See the README.md file in the upper level 'examples' directory for more information about examples.
+For while, every day on 16:00 it's turn on the Pin 2 for 1 second to indicate the activation of the relay.
+
+## SNTP module and time functions
+
+This project use of LwIP SNTP module to obtain time from Internet servers. See the README.md file in the upper level 'examples' directory for more information about examples.
 
 ## Configuring the Example
 
@@ -13,7 +18,7 @@ Open the project configuration menu (`idf.py menuconfig`):
 
 * Select one method to synchronize time out of the three available in `CONFIG_SNTP_TIME_SYNC_METHOD` (default `update time immediately when received`).
 
-* The time synchronization period is defined by `CONFIG_LWIP_SNTP_UPDATE_DELAY`. This option allows you to set the time synchronization period (default is one hour). This option does not affect this example because after synchronization the program goes into deep sleep for 10 seconds. If you modify this example or use the code from this example, keep in mind that this option will trigger time synchronization. You can change it in `Component config-->LWIP-->SNTP-->Request interval to update time (ms)` menu.
+* The time synchronization period is defined by `CONFIG_LWIP_SNTP_UPDATE_DELAY`. This option allows you to set the time synchronization period (default is one hour). This option does not affect this example because after synchronization the program goes into deep sleep for 60 seconds. If you modify this example or use the code from this example, keep in mind that this option will trigger time synchronization. You can change it in `Component config-->LWIP-->SNTP-->Request interval to update time (ms)` menu.
 
 ## Obtaining time using LwIP SNTP module
 
@@ -66,6 +71,9 @@ To set time, [`settimeofday`](http://man7.org/linux/man-pages/man2/settimeofday.
 ## Timezones
 
 To set local timezone, use [`setenv`](http://man7.org/linux/man-pages/man3/setenv.3.html) and [`tzset`](http://man7.org/linux/man-pages/man3/tzset.3.html) POSIX functions. First, call `setenv` to set `TZ` environment variable to the correct value depending on device location. Format of the time string is described in [libc documentation](https://www.gnu.org/software/libc/manual/html_node/TZ-Variable.html). Next, call `tzset` to update C library runtime data for the new time zone. Once these steps are done, `localtime` function will return correct local time, taking time zone offset and daylight saving time into account.
+
+This repository has the timezones: https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv.
+
 
 ## Additional options
 
